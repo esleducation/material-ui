@@ -136,7 +136,13 @@ let TableHeader = React.createClass({
         value="selected"
         disabled={!this.props.enableSelectAll}
         checked={this.props.selectAllSelected}
-        onCheck={this._onSelectAll} />;
+        onCheck={this._onSelectAll}
+        style={{
+          display: 'block',
+          width: 24,
+          marginRight: -24
+        }}
+      />;
 
     return (
       <TableHeaderColumn style={{width: 24}}>

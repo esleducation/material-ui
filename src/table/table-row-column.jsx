@@ -22,6 +22,7 @@ let TableRowColumn = React.createClass({
   getDefaultProps() {
     return {
       hoverable: false,
+      handleClick: true,
     };
   },
 
@@ -44,7 +45,6 @@ let TableRowColumn = React.createClass({
         height: theme.height,
         textAlign: 'left',
         fontSize: 13,
-        overflow: 'hidden',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
       },
@@ -90,7 +90,7 @@ let TableRowColumn = React.createClass({
   },
 
   _onClick(e) {
-    if (this.props.onClick) this.props.onClick(e, this.props.columnNumber);
+    if (this.props.onClick && this.props.handleClick) this.props.onClick(e, this.props.columnNumber);
   },
 
   _onMouseEnter(e) {

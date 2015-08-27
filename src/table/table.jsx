@@ -29,10 +29,10 @@ let Table = React.createClass({
   getDefaultProps() {
     return {
       allRowsSelected: false,
-      fixedFooter: true,
-      fixedHeader: true,
+      fixedFooter: false,
+      fixedHeader: false,
       height: 'inherit',
-      multiSelectable: false,
+      multiSelectable: true,
       selectable: true,
     };
   },
@@ -55,18 +55,20 @@ let Table = React.createClass({
         width: '100%',
         borderCollapse: 'collapse',
         borderSpacing: 0,
-        tableLayout: 'fixed',
+        tableLayout: 'auto',
       },
       bodyTable: {
         height: (this.props.fixedHeader || this.props.fixedFooter) ? this.props.height : 'auto',
-        overflowX: 'hidden',
-        overflowY: 'auto',
       },
       tableWrapper: {
         height: (this.props.fixedHeader || this.props.fixedFooter) ? 'auto' : this.props.height,
-        overflow: 'auto',
+        overflow: 'visible',
       },
     };
+
+    if (this.props.fixed) {
+      styles.root.tableLayout = 'fixed';
+    }
 
     return styles;
   },

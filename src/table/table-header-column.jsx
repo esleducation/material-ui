@@ -50,6 +50,10 @@ let TableHeaderColumn = React.createClass({
       },
     };
 
+    if (this.props.adaptive) {
+      styles.root.width = '1px';
+    }
+
     return styles;
   },
 

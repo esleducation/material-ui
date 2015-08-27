@@ -129,13 +129,19 @@ let TableBody = React.createClass({
         name={key}
         value="selected"
         disabled={!this.props.selectable}
-        checked={rowProps.selected} />;
+        checked={rowProps.selected}
+        style={{
+          display: 'block',
+          width: 24,
+          marginRight: -24
+        }}
+      />;
 
     return (
       <TableRowColumn
         key={key}
         columnNumber={0}
-        style={{width: 24}}>
+        style={{width: 1}}>
         {checkbox}
       </TableRowColumn>
     );
