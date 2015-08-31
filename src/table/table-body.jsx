@@ -84,7 +84,6 @@ let TableBody = React.createClass({
 
   _createRows() {
     let numChildren = React.Children.count(this.props.children);
-    let rowNumber = 0;
     const handlers = {
       onCellClick: this._onCellClick,
       onCellHover: this._onCellHover,
@@ -94,14 +93,14 @@ let TableBody = React.createClass({
       onRowClick: this._onRowClick,
     };
 
-    return React.Children.map(this.props.children, (child) => {
+    return React.Children.map(this.props.children, (child, rowNumber) => {
       if (React.isValidElement(child)) {
         let props = {
           displayRowCheckbox: this.props.displayRowCheckbox,
           hoverable: this.props.showRowHover,
-          selected: this._isRowSelected(rowNumber),
+          selected: this._isRowSelected(rowNumber, child),
           striped: this.props.stripedRows && (rowNumber % 2 === 0),
-          rowNumber: rowNumber++,
+          rowNumber: rowNumber,
         };
         let checkboxColumn = this._createRowCheckboxColumn(props);
 
@@ -167,8 +166,8 @@ let TableBody = React.createClass({
     return preSelectedRows;
   },
 
-  _isRowSelected(rowNumber) {
-    if (this.props.allRowsSelected) {
+  _isRowSelected(rowNumber, child) {
+    if (this.props.allRowsSelected || child.props.selected) {
       return true;
     }
 

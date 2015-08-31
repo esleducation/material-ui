@@ -51,7 +51,7 @@ let Table = React.createClass({
     let styles = {
       root: {
         backgroundColor: this.getTheme().backgroundColor,
-        padding: '0 ' + this.context.muiTheme.spacing.desktopGutter + 'px',
+        padding: 0,
         width: '100%',
         borderCollapse: 'collapse',
         borderSpacing: 0,
@@ -209,7 +209,11 @@ let Table = React.createClass({
   },
 
   _onSelectAll() {
-    if (this.props.onRowSelection && !this.state.allRowsSelected) this.props.onRowSelection('all');
+    if (this.props.onRowSelection && !this.state.allRowsSelected) {
+      this.props.onRowSelection('all');
+    } else {
+      this.props.onRowSelection([]);
+    }
     this.setState({allRowsSelected: !this.state.allRowsSelected});
   },
 

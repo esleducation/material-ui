@@ -88,7 +88,7 @@ let TableHeader = React.createClass({
 
   _createSuperHeaderRow(child, props) {
     let children = [];
-    if (this.props.adjustForCheckbox) {
+    if (this.props.adjustForCheckbox && child.props.adjustForCheckbox !== false) {
       children.push(this._getCheckboxPlaceholder(props));
     }
     React.Children.forEach(child.props.children, (child) => {
