@@ -145,7 +145,7 @@ let TableHeader = React.createClass({
       />;
 
     return (
-      <TableHeaderColumn style={{width: 24}}>
+      <TableHeaderColumn key="baseHeaderColumn" style={{width: 24}}>
         {checkbox}
       </TableHeaderColumn>
     );
