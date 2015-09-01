@@ -1,6 +1,8 @@
 let React = require('react');
 let StylePropable = require('../mixins/style-propable');
 let Tooltip = require('../tooltip');
+let FontIcon = require('../font-icon');
+let Colors = require('../styles/colors');
 
 
 let TableHeaderColumn = React.createClass({
@@ -17,6 +19,12 @@ let TableHeaderColumn = React.createClass({
     style: React.PropTypes.object,
     tooltip: React.PropTypes.string,
     tooltipStyle: React.PropTypes.object,
+  },
+
+  getDefaultProps() {
+    return {
+      sortOrder: 'asc',
+    };
   },
 
   getInitialState() {
@@ -58,6 +66,7 @@ let TableHeaderColumn = React.createClass({
   },
 
   render() {
+    let sortIcon;
     let styles = this.getStyles();
     let handlers = {
       onMouseEnter: this._onMouseEnter,
@@ -71,6 +80,9 @@ let TableHeaderColumn = React.createClass({
       style,
       tooltip,
       tooltipStyle,
+      sorting,
+      sort,
+      sortOrder,
       ...other,
     } = this.props;
     let classes = 'mui-table-header-column';
@@ -85,6 +97,18 @@ let TableHeaderColumn = React.createClass({
       );
     }
 
+    if (sort) {
+      styles.root.cursor = 'pointer';
+
+      if(sorting.property === sort) {
+        styles.root.color = Colors.black;
+
+        sortIcon = (
+          <FontIcon style={{verticalAlign: 'middle'}} className="material-icons" color={styles.root.color}>{sorting.order == 'asc' ? 'arrow_drop_down' : 'arrow_drop_up'}</FontIcon>
+        )
+      }
+    }
+
     return (
       <th
         key={this.props.key}
@@ -93,6 +117,7 @@ let TableHeaderColumn = React.createClass({
         {...handlers}
         {...other}>
         {tooltip}
+        {sortIcon}
         {this.props.children}
       </th>
     );
@@ -107,6 +132,20 @@ let TableHeaderColumn = React.createClass({
   },
 
   _onClick(e) {
+    let { sorting, sort, sortOrder, onSort } = this.props;
+
+    if (sort && onSort) {
+      let order;
+
+      if (sorting.property == sort) {
+        order = sorting.order == 'asc' ? 'desc' : 'asc';
+      } else {
+        order = sortOrder;
+      };
+
+      onSort(this.props.sort, order);
+    };
+
     if (this.props.onClick) this.props.onClick(e, this.props.columnNumber);
   },
 

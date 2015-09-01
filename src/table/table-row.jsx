@@ -125,6 +125,7 @@ let TableRow = React.createClass({
       onClick: this._onCellClick,
       onHover: this._onCellHover,
       onHoverExit: this._onCellHoverExit,
+      onSort: this.props.onSort
     };
 
     return React.cloneElement(
@@ -134,6 +135,10 @@ let TableRow = React.createClass({
         hoverable: this.props.hoverable,
         key: child.props.key || key,
         style: this.mergeAndPrefix(styles.cell, child.props.style),
+        sorting: this.props.sort,
+        sort: child.props.sort,
+        sortOrder: child.props.sortOrder,
+        sortOrderDefault: child.props.sortOrderDefault,
         ...handlers,
       }
     );

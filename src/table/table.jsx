@@ -157,6 +157,8 @@ let Table = React.createClass({
         enableSelectAll: base.props.enableSelectAll && this.props.selectable && this.props.multiSelectable,
         onSelectAll: this._onSelectAll,
         selectAllSelected: this.state.allRowsSelected,
+        sort: this.props.sort,
+        onSort: this._onSort,
       }
     );
   },
@@ -181,6 +183,10 @@ let Table = React.createClass({
 
   _createTableFooter(base) {
     return base;
+  },
+
+  _onSort(property, order) {
+    if (this.props.onSort) this.props.onSort(property, order);
   },
 
   _onCellClick(rowNumber, columnNumber) {

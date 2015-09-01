@@ -105,6 +105,8 @@ let TableHeader = React.createClass({
       className: 'mui-table-header-row',
       key: 'h' + numChildren,
       rowNumber: numChildren,
+      sort: this.props.sort,
+      onSort: this.props.onSort,
     };
 
     let children = [this._getSelectAllCheckboxColumn(props)];
