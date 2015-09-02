@@ -11,7 +11,7 @@ let Table = React.createClass({
   },
 
   propTypes: {
-    allRowsSelected: React.PropTypes.bool,
+    selectedRows: React.PropTypes.any,
     fixedFooter: React.PropTypes.bool,
     fixedHeader: React.PropTypes.bool,
     height: React.PropTypes.string,
@@ -28,7 +28,7 @@ let Table = React.createClass({
 
   getDefaultProps() {
     return {
-      allRowsSelected: false,
+      selectedRows: [],
       fixedFooter: false,
       fixedHeader: false,
       height: 'inherit',
@@ -39,8 +39,12 @@ let Table = React.createClass({
 
   getInitialState() {
     return {
-      allRowsSelected: this.props.allRowsSelected,
+      selectedRows: this.props.selectedRows,
     };
+  },
+
+  componentWillReceiveProps(nextProps) {
+
   },
 
   getTheme() {
@@ -151,12 +155,14 @@ let Table = React.createClass({
   },
 
   _createTableHeader(base) {
+
+
     return React.cloneElement(
       base,
       {
         enableSelectAll: base.props.enableSelectAll && this.props.selectable && this.props.multiSelectable,
         onSelectAll: this._onSelectAll,
-        selectAllSelected: this.state.allRowsSelected,
+        selectAllSelected: this.state.selectedRows === 'all',
         sort: this.props.sort,
         onSort: this._onSort,
       }
@@ -167,7 +173,6 @@ let Table = React.createClass({
     return React.cloneElement(
       base,
       {
-        allRowsSelected: this.state.allRowsSelected,
         multiSelectable: this.props.multiSelectable,
         onCellClick: this._onCellClick,
         onCellHover: this._onCellHover,
@@ -209,18 +214,25 @@ let Table = React.createClass({
     if (this.props.onRowHoverExit) this.props.onRowHoverExit(rowNumber);
   },
 
-  _onRowSelection(selectedRows) {
-    if (this.state.allRowsSelected) this.setState({ allRowsSelected: false });
+  _onRowSelection(selectedRows, total) {
+
+    this.setState({
+      selectedRows: selectedRows.length === total ? 'all' : selectedRows
+    });
+
     if (this.props.onRowSelection) this.props.onRowSelection(selectedRows);
   },
 
   _onSelectAll() {
-    if (this.props.onRowSelection && !this.state.allRowsSelected) {
-      this.props.onRowSelection('all');
+    let selectedRows;
+    if (this.state.selectedRows === 'all') {
+      selectedRows = [];
     } else {
-      this.props.onRowSelection([]);
+      selectedRows = 'all';
     }
-    this.setState({allRowsSelected: !this.state.allRowsSelected});
+
+    this.props.onRowSelection && this.props.onRowSelection(selectedRows);
+    this.setState({ selectedRows });
   },
 
 });

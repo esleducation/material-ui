@@ -30,7 +30,7 @@ let TableBody = React.createClass({
   getDefaultProps() {
     return {
       allRowsSelected: false,
-      deselectOnClickaway: true,
+      deselectOnClickaway: false,
       displayRowCheckbox: true,
       multiSelectable: false,
       preScanRows: true,
@@ -250,7 +250,8 @@ let TableBody = React.createClass({
     }
 
     this.setState({ selectedRows: selectedRows });
-    if (this.props.onRowSelection) this.props.onRowSelection(this._flattenRanges(selectedRows));
+    if (this.props.onRowSelection) this.props.onRowSelection(this._flattenRanges(selectedRows), React.Children.count(this.props.children));
+
   },
 
   _splitRange(range, splitPoint) {

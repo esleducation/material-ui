@@ -104,7 +104,7 @@ let TableHeaderColumn = React.createClass({
         styles.root.color = Colors.black;
 
         sortIcon = (
-          <FontIcon style={{verticalAlign: 'middle'}} className="material-icons" color={styles.root.color}>{sorting.order == 'asc' ? 'arrow_drop_down' : 'arrow_drop_up'}</FontIcon>
+          <FontIcon style={{verticalAlign: 'middle'}} className="material-icons" color={styles.root.color}>{sorting.order == 'asc' ? 'arrow_drop_up' : 'arrow_drop_down'}</FontIcon>
         )
       }
     }
