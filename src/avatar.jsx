@@ -1,6 +1,7 @@
 let React = require('react/addons');
 let StylePropable = require('./mixins/style-propable');
 let Colors = require('./styles/colors');
+let Tooltip = require('./tooltip');
 
 let Avatar = React.createClass({
 
@@ -17,6 +18,10 @@ let Avatar = React.createClass({
     size: React.PropTypes.number,
     src: React.PropTypes.string,
     style: React.PropTypes.object,
+    tooltip: React.PropTypes.string,
+    tooltipStyle: React.PropTypes.object,
+    onHover: React.PropTypes.func,
+    onHoverExit: React.PropTypes.func,
   },
 
   getDefaultProps() {
@@ -24,6 +29,12 @@ let Avatar = React.createClass({
       backgroundColor: Colors.grey400,
       color: Colors.white,
       size: 40,
+    };
+  },
+
+  getInitialState() {
+    return {
+      hovered: false,
     };
   },
 
@@ -35,6 +46,8 @@ let Avatar = React.createClass({
       size,
       src,
       style,
+      tooltip,
+      tooltipStyle,
       ...other,
     } = this.props;
 
@@ -46,7 +59,26 @@ let Avatar = React.createClass({
         borderRadius: '50%',
         display: 'inline-block',
       },
+      tooltip: {
+        boxSizing: 'border-box',
+        marginTop: '-10px',
+        top: 'auto',
+      },
     };
+
+    let handlers = {
+      onMouseEnter: this._onMouseEnter,
+      onMouseLeave: this._onMouseLeave,
+    };
+
+    if (this.props.tooltip !== undefined) {
+      tooltip = (
+        <Tooltip
+          label={this.props.tooltip}
+          show={this.state.hovered}
+          style={this.mergeAndPrefix(styles.tooltip, tooltipStyle)} />
+      );
+    }
 
     if (src) {
       const borderColor = this.context.muiTheme.component.avatar.borderColor;
@@ -78,10 +110,23 @@ let Avatar = React.createClass({
         style: this.mergeStyles(styleIcon, icon.props.style),
       }) : null;
 
-      return <div {...other} style={this.mergeAndPrefix(styles.root, style)}>
+      return <div {...handlers} {...other} style={this.mergeAndPrefix(styles.root, style)}>
         {iconElement}
+        { tooltip }
         {this.props.children}
       </div>;
+    }
+  },
+
+  _onMouseEnter(e) {
+    if (this.props.tooltip !== undefined) {
+      this.setState({hovered: true});
+    }
+  },
+
+  _onMouseLeave(e) {
+    if (this.props.tooltip !== undefined) {
+      this.setState({hovered: false});
     }
   },
 });
