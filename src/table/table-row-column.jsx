@@ -1,6 +1,6 @@
 let React = require('react');
 let StylePropable = require('../mixins/style-propable');
-
+let Tooltip = require('../tooltip');
 
 let TableRowColumn = React.createClass({
 
@@ -17,6 +17,8 @@ let TableRowColumn = React.createClass({
     onHover: React.PropTypes.func,
     onHoverExit: React.PropTypes.func,
     style: React.PropTypes.object,
+    tooltip: React.PropTypes.string,
+    tooltipStyle: React.PropTypes.object,
   },
 
   getDefaultProps() {
@@ -45,10 +47,20 @@ let TableRowColumn = React.createClass({
         height: theme.height,
         textAlign: 'left',
         fontSize: 13,
+        overflow: 'hidden',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
       },
+      tooltip: {
+        boxSizing: 'border-box',
+        marginTop: '-10px',
+        top: 'auto',
+      },
     };
+
+    if(! this.props.adaptive){
+        styles['root']['maxWidth'] = '0';
+    }
 
     if (React.Children.count(this.props.children) === 1 && !isNaN(this.props.children)) {
       styles.textAlign = 'right';
@@ -66,8 +78,11 @@ let TableRowColumn = React.createClass({
       onHover,
       onHoverExit,
       style,
+      tooltip,
+      tooltipStyle,
       ...other,
     } = this.props;
+
     let styles = this.getStyles();
     let handlers = {
       onClick: this._onClick,
@@ -77,6 +92,15 @@ let TableRowColumn = React.createClass({
     let classes = 'mui-table-row-column';
     if (className) classes += ' ' + className;
 
+    if (this.props.tooltip !== undefined) {
+      tooltip = (
+        <Tooltip
+          label={this.props.tooltip}
+          show={this.state.hovered}
+          style={this.mergeAndPrefix(styles.tooltip, tooltipStyle)} />
+      );
+    }
+
     return (
       <td
         key={this.props.key}
@@ -84,7 +108,8 @@ let TableRowColumn = React.createClass({
         style={this.mergeAndPrefix(styles.root, style)}
         {...handlers}
         {...other}>
-        {this.props.children}
+            { tooltip }
+            { this.props.children }
       </td>
     );
   },
@@ -94,14 +119,14 @@ let TableRowColumn = React.createClass({
   },
 
   _onMouseEnter(e) {
-    if (this.props.hoverable) {
+    if (this.props.hoverable || this.props.tooltip !== undefined) {
       this.setState({hovered: true});
       if (this.props.onHover) this.props.onHover(e, this.props.columnNumber);
     }
   },
 
   _onMouseLeave(e) {
-    if (this.props.hoverable) {
+    if (this.props.hoverable || this.props.tooltip !== undefined) {
       this.setState({hovered: false});
       if (this.props.onHoverExit) this.props.onHoverExit(e, this.props.columnNumber);
     }

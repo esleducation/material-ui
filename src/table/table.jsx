@@ -57,6 +57,7 @@ let Table = React.createClass({
         backgroundColor: this.getTheme().backgroundColor,
         padding: 0,
         width: '100%',
+        maxWidth: '100%',
         borderCollapse: 'collapse',
         borderSpacing: 0,
         tableLayout: 'auto',
