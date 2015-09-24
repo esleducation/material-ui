@@ -27,7 +27,10 @@ let TextField = React.createClass({
     errorStyle: React.PropTypes.object,
     errorText: React.PropTypes.string,
     floatingLabelStyle: React.PropTypes.object,
-    floatingLabelText: React.PropTypes.string,
+    floatingLabelText: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.element,
+    ]),
     fullWidth: React.PropTypes.bool,
     hintText: React.PropTypes.oneOfType([
       React.PropTypes.string,
@@ -67,6 +70,7 @@ let TextField = React.createClass({
     let props = (this.props.children) ? this.props.children.props : this.props;
 
     return {
+      value: this.props.value,
       errorText: this.props.errorText,
       hasValue: isValid(props.value) || isValid(props.defaultValue) ||
         (props.valueLink && isValid(props.valueLink.value)),
@@ -84,13 +88,14 @@ let TextField = React.createClass({
   componentWillReceiveProps(nextProps) {
     let newState = {};
 
+
     newState.errorText = nextProps.errorText;
     if (nextProps.children && nextProps.children.props) {
       nextProps = nextProps.children.props;
     }
 
-    let hasValueLinkProp = nextProps.hasOwnProperty('valueLink');
     let hasValueProp = nextProps.hasOwnProperty('value');
+    let hasValueLinkProp = nextProps.hasOwnProperty('valueLink');
     let hasNewDefaultValue = nextProps.defaultValue !== this.props.defaultValue;
 
     if (hasValueLinkProp) {
@@ -98,6 +103,7 @@ let TextField = React.createClass({
     }
     else if (hasValueProp) {
       newState.hasValue = isValid(nextProps.value);
+      newState.value = nextProps.value;
     }
     else if (hasNewDefaultValue) {
       newState.hasValue = isValid(nextProps.defaultValue);
@@ -129,6 +135,14 @@ let TextField = React.createClass({
         lineHeight: '12px',
         color: theme.errorColor,
         transition: Transitions.easeOut(),
+      },
+      maxLengthCounter: {
+        position: 'absolute',
+        bottom: -7,
+        right: 0,
+        fontSize: 12,
+        lineHeight: '12px',
+        color: theme.hintColor,
       },
       hint: {
         position: 'absolute',
@@ -199,10 +213,12 @@ let TextField = React.createClass({
 
     styles.focusUnderline = this.mergeStyles(styles.underline, styles.underlineFocus, props.underlineFocusStyle);
 
-    if (this.state.isFocused) {
+    if (this.props.isFocused || this.state.isFocused) {
       styles.floatingLabel.color = theme.focusColor;
       styles.floatingLabel.transform = 'perspective(1px) scale(0.75) translate3d(2px, -28px, 0)';
       styles.focusUnderline.transform = 'scaleX(1)';
+
+
     }
 
     if (this.state.hasValue) {
@@ -305,6 +321,14 @@ let TextField = React.createClass({
       );
     }
 
+    // Maxlength counter
+    let maxLengthCounter;
+    if((this.props.isFocused || this.state.isFocused) && this.props.maxLength) {
+      let inputLength = this.state.value ? this.state.value.length : 0;
+
+      maxLengthCounter = <div style={this.mergeAndPrefix(styles.maxLengthCounter)}>{`${inputLength}/${this.props.maxLength}`}</div>;
+    }
+
     let underlineElement = this.props.disabled ? (
       <div style={this.mergeAndPrefix(styles.underlineAfter)}></div>
     ) : (
@@ -320,6 +344,7 @@ let TextField = React.createClass({
         {underlineElement}
         {focusUnderlineElement}
         {errorTextElement}
+        {maxLengthCounter}
       </div>
     );
   },
@@ -380,7 +405,10 @@ let TextField = React.createClass({
   },
 
   _handleInputChange(e) {
-    this.setState({hasValue: isValid(e.target.value)});
+    this.setState({
+      hasValue: isValid(e.target.value),
+      value: e.target.value
+    });
     if (this.props.onChange) this.props.onChange(e);
   },
 
