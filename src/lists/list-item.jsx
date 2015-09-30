@@ -304,7 +304,6 @@ const ListItem = React.createClass({
     }
 
     if (primaryText) {
-        console.log('primaryTextStyle', primaryTextStyle);
       const secondaryTextElement = this._createTextElement(
         this.mergeStyles(styles.primaryText, primaryTextStyle),
         primaryText,
