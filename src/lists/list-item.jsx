@@ -43,7 +43,9 @@ const ListItem = React.createClass({
     rightIconButton: React.PropTypes.element,
     rightToggle: React.PropTypes.element,
     primaryText: React.PropTypes.node,
+    primaryTextStyle: React.PropTypes.object,
     secondaryText: React.PropTypes.node,
+    secondaryTextStyle: React.PropTypes.object,
     secondaryTextLines: React.PropTypes.oneOf([1, 2]),
   },
 
@@ -59,6 +61,8 @@ const ListItem = React.createClass({
       onNestedListToggle: () => {},
       onTouchStart: () => {},
       secondaryTextLines: 1,
+      primaryTextStyle: {},
+      secondaryTextStyle: {},
     };
   },
 
@@ -95,7 +99,9 @@ const ListItem = React.createClass({
       rightIconButton,
       rightToggle,
       primaryText,
+      primaryTextStyle,
       secondaryText,
+      secondaryTextStyle,
       secondaryTextLines,
       style,
       ...other,
@@ -298,8 +304,9 @@ const ListItem = React.createClass({
     }
 
     if (primaryText) {
+        console.log('primaryTextStyle', primaryTextStyle);
       const secondaryTextElement = this._createTextElement(
-        styles.primaryText,
+        this.mergeStyles(styles.primaryText, primaryTextStyle),
         primaryText,
         'primaryText'
       );
@@ -308,7 +315,7 @@ const ListItem = React.createClass({
 
     if (secondaryText) {
       const secondaryTextElement = this._createTextElement(
-        styles.secondaryText,
+        this.mergeStyles(styles.secondaryText, secondaryTextStyle),
         secondaryText,
         'secondaryText'
       );
