@@ -99,6 +99,10 @@ let TableRow = React.createClass({
     if (className) classes += ' ' + className;
     let rowColumns = this._createColumns();
 
+    if(this.props.displayRowCheckbox){
+        classes += ' select'
+    }
+
     return (
       <tr
         className={classes}

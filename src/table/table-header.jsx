@@ -80,6 +80,7 @@ let TableHeader = React.createClass({
         key: 'sh' + index,
         rowNumber: index,
       };
+
       superHeaders.push(this._createSuperHeaderRow(child, props));
     }
 
@@ -108,6 +109,10 @@ let TableHeader = React.createClass({
       sort: this.props.sort,
       onSort: this.props.onSort,
     };
+
+    if(this.props.displaySelectAll){
+        props['className'] += ' select-all'
+    }
 
     let children = [this._getSelectAllCheckboxColumn(props)];
     React.Children.forEach(child.props.children, (child) => {
