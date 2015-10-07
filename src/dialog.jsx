@@ -141,7 +141,7 @@ let Dialog = React.createClass({
       width: '75%',
       maxWidth: spacing.desktopKeylineIncrement * 12,
       margin: '0 auto',
-      zIndex: 10,
+      zIndex: 10001,
     };
 
     let body = {
