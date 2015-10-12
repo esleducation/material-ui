@@ -324,7 +324,7 @@ let TextField = React.createClass({
     // Maxlength counter
     let maxLengthCounter;
     if((this.props.isFocused || this.state.isFocused) && this.props.maxLength) {
-      let inputLength = this.state.value ? this.state.value.length : 0;
+      let inputLength = this.state.value ? String(this.state.value).length : 0;
 
       maxLengthCounter = <div style={this.mergeAndPrefix(styles.maxLengthCounter)}>{`${inputLength}/${this.props.maxLength}`}</div>;
     }
