@@ -125,7 +125,7 @@ let Dialog = React.createClass({
       position: 'fixed',
       boxSizing: 'border-box',
       WebkitTapHighlightColor: 'rgba(0,0,0,0)',
-      zIndex: 10,
+      zIndex: 10001,
       top: 0,
       left: -10000,
       width: '100%',
@@ -141,7 +141,7 @@ let Dialog = React.createClass({
       width: '75%',
       maxWidth: spacing.desktopKeylineIncrement * 12,
       margin: '0 auto',
-      zIndex: 10001,
+      zIndex: 10002,
     };
 
     let body = {
