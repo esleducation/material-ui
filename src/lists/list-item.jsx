@@ -33,6 +33,7 @@ const ListItem = React.createClass({
     leftIcon: React.PropTypes.element,
     nestedLevel: React.PropTypes.number,
     nestedItems: React.PropTypes.arrayOf(React.PropTypes.element),
+    nestedListStyle: React.PropTypes.object,
     onKeyboardFocus: React.PropTypes.func,
     onMouseEnter: React.PropTypes.func,
     onMouseLeave: React.PropTypes.func,
@@ -55,6 +56,7 @@ const ListItem = React.createClass({
       initiallyOpen: false,
       nestedItems: [],
       nestedLevel: 0,
+      nestedListStyle: {},
       onKeyboardFocus: () => {},
       onMouseEnter: () => {},
       onMouseLeave: () => {},
@@ -322,7 +324,7 @@ const ListItem = React.createClass({
     }
 
     const nestedList = nestedItems.length ? (
-      <NestedList nestedLevel={nestedLevel + 1} open={this.state.open}>
+      <NestedList style={ this.props.nestedListStyle } nestedLevel={nestedLevel + 1} open={this.state.open}>
         {nestedItems}
       </NestedList>
     ) : undefined;
