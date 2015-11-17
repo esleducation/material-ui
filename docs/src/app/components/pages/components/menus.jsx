@@ -1,22 +1,23 @@
-let React = require('react/addons');
-let ReactTransitionGroup = React.addons.TransitionGroup;
-let Menu = require('menus/menu');
-let MenuItem = require('menus/menu-item');
-let MenuDivider = require('menus/menu-divider');
-let ComponentDoc = require('../../component-doc');
+const React = require('react');
+const ReactTransitionGroup = require('react-addons-transition-group');
+const Paper = require('paper');
+const Menu = require('menus/menu');
+const MenuItem = require('menus/menu-item');
+const MenuDivider = require('menus/menu-divider');
+const ComponentDoc = require('../../component-doc');
 
-let ArrowDropRight = require('svg-icons/navigation-arrow-drop-right');
-let ContentCopy = require('svg-icons/content/content-copy');
-let ContentLink = require('svg-icons/content/link');
-let Delete = require('svg-icons/action/delete');
-let Download = require('svg-icons/file/file-download');
-let PersonAdd = require('svg-icons/social/person-add');
-let RemoveRedEye = require('svg-icons/image/remove-red-eye');
-let Code = require('menus-code');
-let CodeExample = require('../../code-example/code-example');
+const ArrowDropRight = require('svg-icons/navigation-arrow-drop-right');
+const ContentCopy = require('svg-icons/content/content-copy');
+const ContentLink = require('svg-icons/content/link');
+const Delete = require('svg-icons/action/delete');
+const Download = require('svg-icons/file/file-download');
+const PersonAdd = require('svg-icons/social/person-add');
+const RemoveRedEye = require('svg-icons/image/remove-red-eye');
+const Code = require('menus-code');
+const CodeExample = require('../../code-example/code-example');
+const CodeBlock = require('../../code-example/code-block');
 
-
-class MenusPage extends React.Component {
+export default class MenusPage extends React.Component {
 
   render() {
 
@@ -31,67 +32,73 @@ class MenusPage extends React.Component {
             type: 'bool',
             header: 'default: false',
             desc: 'If true, the menu will apply transitions when added it gets added to the DOM. In order for transitions ' +
-              'to work, wrap the menu inside a ReactTransitionGroup.'
+              'to work, wrap the menu inside a ReactTransitionGroup.',
           },
           {
             name: 'autoWidth',
             type: 'bool',
             header: 'default: true',
             desc: 'If true, the width will automatically be set according to the items inside the menu using the ' +
-              'proper keyline increment.'
+              'proper keyline increment.',
           },
           {
             name: 'desktop',
             type: 'bool',
             header: 'default: false',
-            desc: 'Indicates if the menu should render with compact desktop styles.'
+            desc: 'Indicates if the menu should render with compact desktop styles.',
+          },
+          {
+            name: 'style',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the menu\'s root element.',
           },
           {
             name: 'listStyle',
             type: 'object',
             header: 'optional',
-            desc: 'The style object to use to override underlying list style.'
+            desc: 'The style object to use to override underlying list style.',
           },
           {
             name: 'maxHeight',
             type: 'number',
             header: 'optional',
-            desc: 'The maxHeight of the menu in pixels. If specified, the menu will scroll if larger than the maxHeight.'
+            desc: 'The maxHeight of the menu in pixels. If specified, the menu will scroll if larger than the maxHeight.',
           },
           {
             name: 'multiple',
             type: 'bool',
             header: 'default: false',
-            desc: 'If true, the value can an array and allow the menu to be a multi-select.'
+            desc: 'If true, the value can an array and allow the menu to be a multi-select.',
           },
           {
             name: 'openDirection',
             type: 'oneOf [bottom-left, bottom-right, top-left, top-right]',
             header: 'default: bottom-left',
-            desc: 'This is the placement of the menu relative to the IconButton.'
+            desc: 'This is the placement of the menu relative to the IconButton.',
           },
           {
             name: 'value',
             type: 'string or array',
             header: 'optional',
             desc: 'The value of the selected menu item. If passed in, this will make the menu ' +
-              'a controlled component. This component also supports valueLink.'
+              'a controlled component. This component also supports valueLink.',
           },
           {
             name: 'width',
             type: 'string or number',
             header: 'optional',
             desc: 'Sets the width of the menu. If not specified, the menu width will be dictated by its ' +
-              'children. The rendered width will always be a keyline increment (64px for desktop, 56px otherwise).'
+              'children. The rendered width will always be a keyline increment (64px for desktop, 56px otherwise).',
           },
           {
             name: 'zDepth',
             type: 'oneOf [0,1,2,3,4,5]',
             header: 'optional',
             desc: 'Sets the width of the menu. If not specified, the menu width will be dictated by its ' +
-              'children. The rendered width will always be a keyline increment (64px for desktop, 56px otherwise).'
-          }
-        ]
+              'children. The rendered width will always be a keyline increment (64px for desktop, 56px otherwise).',
+          },
+        ],
       },
       {
         name: 'MenuItem Props',
@@ -100,87 +107,93 @@ class MenusPage extends React.Component {
             name: 'checked',
             type: 'bool',
             header: 'default: false',
-            desc: 'If true, a left check mark will be rendered'
+            desc: 'If true, a left check mark will be rendered',
           },
           {
             name: 'desktop',
             type: 'bool',
             header: 'default: false',
-            desc: 'Indicates if the menu should render with compact desktop styles.'
+            desc: 'Indicates if the menu should render with compact desktop styles.',
           },
           {
             name: 'disabled',
             type: 'bool',
             header: 'default: false',
-            desc: 'Disables a menu item.'
+            desc: 'Disables a menu item.',
+          },
+          {
+            name: 'style',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the menu item\'s root element.',
           },
           {
             name: 'innerDivStyle',
             type: 'object',
             header: 'optional',
-            desc: 'Style overrides for the inner div.'
+            desc: 'Style overrides for the inner div.',
           },
           {
             name: 'insetChildren',
             type: 'bool',
             header: 'default: false',
-            desc: 'If true, the children will be indented. Only needed when there is no leftIcon.'
+            desc: 'If true, the children will be indented. Only needed when there is no leftIcon.',
           },
           {
             name: 'leftIcon',
             type: 'element',
             header: 'optional',
-            desc: 'This is the SvgIcon or FontIcon to be displayed on the left side.'
+            desc: 'This is the SvgIcon or FontIcon to be displayed on the left side.',
           },
           {
             name: 'primaryText',
             type: 'node',
             header: 'optional',
             desc: 'This is the block element that contains the primary text. If a string is passed in, a ' +
-              'div tag will be rendered.'
+              'div tag will be rendered.',
           },
           {
             name: 'rightIcon',
             type: 'element',
             header: 'optional',
-            desc: 'This is the SvgIcon or FontIcon to be displayed on the right side.'
+            desc: 'This is the SvgIcon or FontIcon to be displayed on the right side.',
           },
           {
             name: 'secondaryText',
             type: 'node',
             header: 'optional',
             desc: 'This is the block element that contains the secondary text. If a string is passed in, a ' +
-              'div tag will be rendered.'
+              'div tag will be rendered.',
           },
           {
             name: 'value',
             type: 'string',
             header: 'optional',
-            desc: 'The value of the menu item.'
-          }
-        ]
+            desc: 'The value of the menu item.',
+          },
+        ],
       },
       {
         name: 'Events',
         infoArray: [
           {
             name: 'onEscKeyDown',
-            header: 'function(e)',
-            desc: 'Fired when an Esc key is keyed down.'
+            header: 'function(event)',
+            desc: 'Fired when an Esc key is keyed down.',
           },
           {
             name: 'onItemTouchTap',
-            header: 'function(e, item)',
-            desc: 'Fired when a menu item is touchTapped.'
+            header: 'function(event, item)',
+            desc: 'Fired when a menu item is touchTapped.',
           },
           {
             name: 'onChange',
-            header: 'function(e, value)',
+            header: 'function(event, value)',
             desc: 'Fired when a menu item is touchTapped and the menu item value ' +
-              'is not equal to the current menu value.'
-          }
-        ]
-      }
+              'is not equal to the current menu value.',
+          },
+        ],
+      },
     ];
 
     let styles = {
@@ -189,13 +202,13 @@ class MenusPage extends React.Component {
         marginBottom: 32,
         float: 'left',
         position: 'relative',
-        zIndex: 0
+        zIndex: 0,
       },
 
       hr: {
         clear: 'both',
-        border: 'none'
-      }
+        border: 'none',
+      },
     };
 
     return (
@@ -203,6 +216,18 @@ class MenusPage extends React.Component {
         name="Menus"
         desc={desc}
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nconst Menu = require(\'material-ui/lib/menus/menu\');\n' +
+            'const MenuItem = require(\'material-ui/lib/menus/menu-item\');\n' +
+            'const MenuDivider = require(\'material-ui/lib/menus/menu-divider\');\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <Menu style={styles.menu}>
             <MenuItem primaryText="Maps" />
@@ -313,5 +338,3 @@ class MenusPage extends React.Component {
   }
 
 }
-
-module.exports = MenusPage;

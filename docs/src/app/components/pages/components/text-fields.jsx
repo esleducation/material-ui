@@ -1,14 +1,16 @@
-let React = require('react/addons');
-let { ClearFix, Mixins, SelectField, TextField, Styles } = require('material-ui');
-let ComponentDoc = require('../../component-doc');
-let { Colors } = Styles;
-let { StyleResizable } = Mixins;
-let Code = require('text-fields-code');
-let CodeExample = require('../../code-example/code-example');
+const React = require('react');
+const { ClearFix, Mixins, SelectField, TextField, Styles, Paper } = require('material-ui');
+const ComponentDoc = require('../../component-doc');
+const { Colors } = Styles;
+const { StyleResizable } = Mixins;
+const Code = require('text-fields-code');
+const CodeExample = require('../../code-example/code-example');
+const LinkedStateMixin = require('react-addons-linked-state-mixin');
+const CodeBlock = require('../../code-example/code-block');
 
-let TextFieldsPage = React.createClass({
+const TextFieldsPage = React.createClass({
 
-  mixins: [StyleResizable, React.addons.LinkedStateMixin],
+  mixins: [StyleResizable, LinkedStateMixin],
 
   getInitialState() {
     return {
@@ -23,7 +25,7 @@ let TextFieldsPage = React.createClass({
       selectValue2: undefined,
       selectValueLinkValue: 4,
       selectValueLinkValue2: 3,
-      floatingValueLinkValue: 'Value Link'
+      floatingValueLinkValue: 'Value Link',
     };
   },
 
@@ -32,11 +34,11 @@ let TextFieldsPage = React.createClass({
       group: {
         width: '100%',
         float: 'left',
-        marginBottom: 32
+        marginBottom: 32,
       },
       textfield: {
-        marginTop: 24
-      }
+        marginTop: 24,
+      },
     };
 
     if (this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
@@ -49,79 +51,121 @@ let TextFieldsPage = React.createClass({
   render() {
 
     let desc = 'This component extends the current input element and will support all of its props and events. It supports ' +
-      'valueLink and can be controlled or uncontrolled.' ;
+      'valueLink and can be controlled or uncontrolled.';
 
     let componentInfo = [
       {
         name: 'Props',
         infoArray: [
           {
+            name: 'defaultValue',
+            type: 'string',
+            header: 'optional',
+            desc: 'The text string to use for the default value.',
+          },
+          {
             name: 'errorStyle',
             type: 'object',
             header: 'optional',
-            desc: 'The style object to use to override error styles.'
+            desc: 'The style object to use to override error styles.',
           },
           {
             name: 'errorText',
             type: 'string',
             header: 'optional',
-            desc: 'The error text string to display.'
+            desc: 'The error text string to display.',
+          },
+          {
+            name: 'floatingLabelStyle',
+            type: 'object',
+            header: 'optional',
+            desc: 'The style object to use to override floating label styles.',
           },
           {
             name: 'floatingLabelText',
             type: 'string',
             header: 'optional',
-            desc: 'The text string to use for the floating label element.'
+            desc: 'The text string to use for the floating label element.',
           },
           {
             name: 'fullWidth',
             type: 'bool',
             header: 'optional',
-            desc: 'If true, the field receives the property width 100%.'
+            desc: 'If true, the field receives the property width 100%.',
+          },
+          {
+            name: 'hintStyle',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the TextField\'s hint text element.',
           },
           {
             name: 'hintText',
             type: 'string',
             header: 'optional',
-            desc: 'The hint text string to display.'
+            desc: 'The hint text string to display.',
+          },
+          {
+            name: 'inputStyle',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the TextField\'s input element.',
           },
           {
             name: 'multiLine',
             type: 'bool',
             header: 'default: false',
-            desc: 'If true, a textarea element will be rendered. The textarea also grows and shrinks according to the number of lines.'
+            desc: 'If true, a textarea element will be rendered. The textarea also grows and shrinks according to the number of lines.',
+          },
+          {
+            name: 'rows',
+            type: 'string',
+            header: 'default: 1',
+            desc: 'Number of rows to display when multiLine option is set to true.',
+          },
+          {
+            name: 'rowsMax',
+            type: 'string',
+            header: 'default: null',
+            desc: 'Maximum number of rows to display when multiLine option is set to true.',
           },
           {
             name: 'onEnterKeyDown',
             type: 'function',
             header: 'optional',
-            desc: 'The function to call when the user presses the Enter key.'
+            desc: 'The function to call when the user presses the Enter key.',
           },
           {
             name: 'style',
             type: 'object',
             header: 'optional',
-            desc: 'Override the inline-styles of the TextField\'s root element.'
+            desc: 'Override the inline-styles of the TextField\'s root element.',
           },
           {
             name: 'underlineStyle',
             type: 'object',
             header: 'optional',
-            desc: 'Override the inline-styles of the TextField\'s underline element.'
+            desc: 'Override the inline-styles of the TextField\'s underline element.',
           },
           {
             name: 'underlineFocusStyle',
             type: 'object',
             header: 'optional',
-            desc: 'Override the inline-styles of the TextField\'s underline element when focussed.'
+            desc: 'Override the inline-styles of the TextField\'s underline element when focussed.',
+          },
+          {
+            name: 'underlineDisabledStyle',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the TextField\'s underline element when disabled.',
           },
           {
             name: 'type',
             type: 'string',
             header: 'optional',
-            desc: 'Specifies the type of input to display such as "password" or "text".'
-          }
-        ]
+            desc: 'Specifies the type of input to display such as "password" or "text".',
+          },
+        ],
       },
       {
         name: 'Methods',
@@ -129,58 +173,58 @@ let TextFieldsPage = React.createClass({
           {
             name: 'blur',
             header: 'TextField.blur()',
-            desc: 'Removes focus on the input element.'
+            desc: 'Removes focus on the input element.',
           },
           {
             name: 'clearValue',
             header: 'TextField.clearValue()',
-            desc: 'Clears the value on the input element.'
+            desc: 'Clears the value on the input element.',
           },
           {
             name: 'focus',
             header: 'TextField.focus()',
-            desc: 'Sets the focus on the input element.'
+            desc: 'Sets the focus on the input element.',
           },
           {
             name: 'getValue',
             header: 'TextField.getValue()',
-            desc: 'Returns the value of the input.'
+            desc: 'Returns the value of the input.',
           },
           {
             name: 'setErrorText',
             header: 'TextField.setErrorText(newErrorText)',
-            desc: 'Sets the error text on the input element.'
+            desc: 'Sets the error text on the input element.',
           },
           {
             name: 'setValue',
             header: 'TextField.setValue(newValue)',
-            desc: 'Sets the value of the input element.'
-          }
-        ]
+            desc: 'Sets the value of the input element.',
+          },
+        ],
       },
       {
         name: 'Events',
         infoArray: [
           {
             name: 'onBlur',
-            header: 'function(e)',
+            header: 'function(event)',
             desc: 'Callback function that is fired when the textfield loses' +
-                  'focus.'
+                  'focus.',
           },
           {
             name: 'onChange',
-            header: 'function(e)',
+            header: 'function(event)',
             desc: 'Callback function that is fired when the textfield\'s value ' +
-                  'changes.'
+                  'changes.',
           },
           {
             name: 'onFocus',
-            header: 'function(e)',
+            header: 'function(event)',
             desc: 'Callback function that is fired when the textfield gains ' +
-                  'focus.'
+                  'focus.',
           },
-        ]
-      }
+        ],
+      },
     ];
 
     let styles = this.getStyles();
@@ -196,7 +240,7 @@ let TextFieldsPage = React.createClass({
       {id:2, name:'Every Night'},
       {id:3, name:'Weeknights'},
       {id:4, name:'Weekends'},
-      {id:5, name:'Weekly'}
+      {id:5, name:'Weekly'},
     ];
 
     return (
@@ -204,12 +248,27 @@ let TextFieldsPage = React.createClass({
         name="Text Field"
         desc={desc}
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nconst TextField = require(\'material-ui/lib/text-field\');\n' +
+            'const SelectField = require(\'material-ui/lib/select-field\');\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <ClearFix>
             <div style={styles.group}>
               <TextField
                 style={styles.textfield}
                 hintText="Hint Text" /><br/>
+              <TextField
+                style={styles.textfield}
+                hintText="Styled Hint Text"
+                hintStyle={{color: 'red'}} /><br/>
               <TextField
                 style={styles.textfield}
                 hintText="Hint Text"
@@ -226,6 +285,11 @@ let TextFieldsPage = React.createClass({
                 underlineFocusStyle={{borderColor: Colors.amber900}} /><br />
               <TextField
                 style={styles.textfield}
+                disabled={true}
+                hintText="Custom Underline Disabled Style"
+                underlineDisabledStyle={{borderColor:Colors.purple500, borderBottom: 'solid 1px'}} /><br />
+              <TextField
+                style={styles.textfield}
                 hintText="Hint Text"
                 valueLink={this.linkState('valueLinkValue')} /><br/>
               <TextField
@@ -235,6 +299,12 @@ let TextFieldsPage = React.createClass({
               <TextField
                 style={styles.textfield}
                 hintText="The hint text can be as long as you want, it will wrap."
+                multiLine={true} /><br/>
+              <TextField
+                style={styles.textfield}
+                rows={2}
+                rowsMax={4}
+                hintText="Hint Text (MultiLine) with rows: 2 and rowsMax: 4."
                 multiLine={true} /><br/>
               <TextField
                 style={styles.textfield}
@@ -340,7 +410,7 @@ let TextFieldsPage = React.createClass({
 
   _handleErrorInputChange(e) {
     this.setState({
-      errorText: e.target.value ? '' : 'This field is required.'
+      errorText: e.target.value ? '' : 'This field is required.',
     });
   },
 
@@ -348,13 +418,13 @@ let TextFieldsPage = React.createClass({
     let value = e.target.value;
     let isNumeric = !isNaN(parseFloat(value)) && isFinite(value);
     this.setState({
-      error2Text: isNumeric ? '' : 'This field must be numeric.'
+      error2Text: isNumeric ? '' : 'This field must be numeric.',
     });
   },
 
   _handleFloatingErrorInputChange(e) {
     this.setState({
-      floatingErrorText: e.target.value ? '' : 'This field is required.'
+      floatingErrorText: e.target.value ? '' : 'This field is required.',
     });
   },
 
@@ -362,13 +432,13 @@ let TextFieldsPage = React.createClass({
     let value = e.target.value;
     let isNumeric = !isNaN(parseFloat(value)) && isFinite(value);
     this.setState({
-      floatingError2Text: isNumeric ? '' : 'This field must be numeric.'
+      floatingError2Text: isNumeric ? '' : 'This field must be numeric.',
     });
   },
 
   _handleInputChange(e) {
     this.setState({
-      propValue: e.target.value
+      propValue: e.target.value,
     });
   },
 
@@ -380,9 +450,9 @@ let TextFieldsPage = React.createClass({
 
   _handleFloatingInputChange(e) {
     this.setState({
-      floatingPropValue: e.target.value
+      floatingPropValue: e.target.value,
     });
-  }
+  },
 
 });
 

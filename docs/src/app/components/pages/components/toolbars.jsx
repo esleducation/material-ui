@@ -1,8 +1,8 @@
-let React = require('react');
-let mui = require('material-ui');
-let ComponentDoc = require('../../component-doc');
+const React = require('react');
+const mui = require('material-ui');
+const ComponentDoc = require('../../component-doc');
 
-let {
+const {
   DropDownIcon,
   DropDownMenu,
   FontIcon,
@@ -10,13 +10,14 @@ let {
   Toolbar,
   ToolbarGroup,
   ToolbarSeparator,
-  ToolbarTitle
+  ToolbarTitle,
+  Paper,
 } = mui;
-let Code = require('toolbars-code');
-let CodeExample = require('../../code-example/code-example');
+const Code = require('toolbars-code');
+const CodeExample = require('../../code-example/code-example');
+const CodeBlock = require('../../code-example/code-block');
 
-
-class ToolbarPage extends React.Component {
+export default class ToolbarPage extends React.Component {
 
   render() {
 
@@ -25,50 +26,68 @@ class ToolbarPage extends React.Component {
                'appBars. AppBars are a subset of toolbars. The following ' +
                'toolbar components can help organize your layout. Note that ' +
                'every component listed here (including Toolbar) have a style ' +
-               'prop which overrides the inline-styles of their root element.'
+               'prop which overrides the inline-styles of their root element.';
 
     let componentInfo = [
       {
         name: 'ToolbarGroup',
-          infoArray: [
-            {
-              name: 'Description',
-              desc: 'Toolbar Group contains a collection of components for you. ' +
-                    'It is recommended that all components in a Toolbar are ' +
-                    'contained within a ToolbarGroup.'
-            },
-            {
-              name: 'float',
-              type: 'string',
-              header: 'optional',
-              desc: 'Optional pull "left" or "right"'
-            }
-          ]
+        infoArray: [
+          {
+            name: 'Description',
+            desc: 'Toolbar Group contains a collection of components for you. ' +
+                  'It is recommended that all components in a Toolbar are ' +
+                  'contained within a ToolbarGroup.',
+          },
+          {
+            name: 'float',
+            type: 'string',
+            header: 'optional',
+            desc: 'Optional pull "left" or "right"',
+          },
+          {
+            name: 'style',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the toolbar group\'s root element.',
+          },
+        ],
       },
       {
         name: 'ToolbarSeparator',
-          infoArray: [
-            {
-              name: 'Description',
-              desc: 'A vertical bar used to separate groups of components. It ' +
-                    'is used to easily organize components.'
-            }
-          ]
+        infoArray: [
+          {
+            name: 'Description',
+            desc: 'A vertical bar used to separate groups of components. It ' +
+                  'is used to easily organize components.',
+          },
+          {
+            name: 'style',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the toolbar separator\'s root element.',
+          },
+        ],
       },
       {
         name: 'ToolbarTitle',
-          infoArray: [
-            {
-              name: 'Description',
-              desc: 'Simply a string of text that is displayed in the Toolbar.'
-            },
-            {
-              name: 'text',
-              type: 'string',
-              header: 'optional',
-              desc: 'The text to be displayed for the element.'
-            }
-          ]
+        infoArray: [
+          {
+            name: 'Description',
+            desc: 'Simply a string of text that is displayed in the Toolbar.',
+          },
+          {
+            name: 'text',
+            type: 'string',
+            header: 'optional',
+            desc: 'The text to be displayed for the element.',
+          },
+          {
+            name: 'style',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the toolbar title\'s root element.',
+          },
+        ],
       },
     ];
 
@@ -83,7 +102,7 @@ class ToolbarPage extends React.Component {
     ];
     let iconMenuItems = [
       { payload: '1', text: 'Download' },
-      { payload: '2', text: 'More Info' }
+      { payload: '2', text: 'More Info' },
     ];
 
     return (
@@ -91,6 +110,19 @@ class ToolbarPage extends React.Component {
         name="Toolbars"
         desc={desc}
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nconst Toolbar = require(\'material-ui/lib/toolbar/toolbar\');\n' +
+            'const ToolbarGroup = require(\'material-ui/lib/toolbar/toolbar-group\');\n' +
+            'const ToolbarSeparator = require(\'material-ui/lib/toolbar/toolbar-separator\');\n' +
+            'const ToolbarTitle = require(\'material-ui/lib/toolbar/toolbar-title\');\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <Toolbar>
             <ToolbarGroup key={0} float="left">
@@ -108,7 +140,4 @@ class ToolbarPage extends React.Component {
       </ComponentDoc>
     );
   }
-
 }
-
-module.exports = ToolbarPage;

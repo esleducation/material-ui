@@ -1,21 +1,21 @@
-let React = require('react');
-let mui = require('material-ui');
-let ComponentDoc = require('../../component-doc');
-let MobileTearSheet = require('../../mobile-tear-sheet');
-let ActionAssignment = require('svg-icons/action/assignment');
-let ActionGrade = require('svg-icons/action/grade');
-let ActionInfo = require('svg-icons/action/info');
-let CommunicationCall = require('svg-icons/communication/call');
-let CommunicationChatBubble = require('svg-icons/communication/chat-bubble');
-let CommunicationEmail = require('svg-icons/communication/email');
-let ContentDrafts = require('svg-icons/content/drafts');
-let ContentInbox = require('svg-icons/content/inbox');
-let ContentSend = require('svg-icons/content/send');
-let EditorInsertChart = require('svg-icons/editor/insert-chart');
-let FileFolder = require('svg-icons/file/folder');
-let MoreVertIcon = require('svg-icons/navigation/more-vert');
+const React = require('react');
+const mui = require('material-ui');
+const ComponentDoc = require('../../component-doc');
+const MobileTearSheet = require('../../mobile-tear-sheet');
+const ActionAssignment = require('svg-icons/action/assignment');
+const ActionGrade = require('svg-icons/action/grade');
+const ActionInfo = require('svg-icons/action/info');
+const CommunicationCall = require('svg-icons/communication/call');
+const CommunicationChatBubble = require('svg-icons/communication/chat-bubble');
+const CommunicationEmail = require('svg-icons/communication/email');
+const ContentDrafts = require('svg-icons/content/drafts');
+const ContentInbox = require('svg-icons/content/inbox');
+const ContentSend = require('svg-icons/content/send');
+const EditorInsertChart = require('svg-icons/editor/insert-chart');
+const FileFolder = require('svg-icons/file/folder');
+const MoreVertIcon = require('svg-icons/navigation/more-vert');
 
-let {
+const {
   Avatar,
   Checkbox,
   IconButton,
@@ -23,22 +23,22 @@ let {
   ListDivider,
   ListItem,
   Styles,
-  Toggle
+  Toggle,
+  Paper,
 } = mui;
 
-let IconMenu = require('menus/icon-menu');
-let MenuItem = require('menus/menu-item');
+const IconMenu = require('menus/icon-menu');
+const MenuItem = require('menus/menu-item');
 
-let { Colors } = Styles;
-let Code = require('lists-code');
-let CodeExample = require('../../code-example/code-example');
+const { Colors } = Styles;
+const Code = require('lists-code');
+const CodeExample = require('../../code-example/code-example');
+const CodeBlock = require('../../code-example/code-block');
 
+export default class ListsPage extends React.Component {
 
-
-class ListsPage extends React.Component {
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   render() {
@@ -51,21 +51,27 @@ class ListsPage extends React.Component {
             name: 'insetSubheader',
             type: 'bool',
             header: 'default: false',
-            desc: 'If true, the subheader will be indented by 72px.'
+            desc: 'If true, the subheader will be indented by 72px.',
+          },
+          {
+            name: 'style',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the list\'s root element.',
           },
           {
             name: 'subheader',
-            type: 'string',
+            type: 'node',
             header: 'optional',
-            desc: 'The subheader string that will be displayed at the top of the list.'
+            desc: 'The subheader string that will be displayed at the top of the list.',
           },
           {
             name: 'subheaderStyle',
             type: 'object',
             header: 'optional',
-            desc: 'The style object to override subheader styles.'
-          }
-        ]
+            desc: 'The style object to override subheader styles.',
+          },
+        ],
       },
       {
         name: 'ListItem Props',
@@ -74,74 +80,74 @@ class ListsPage extends React.Component {
             name: 'autoGenerateNestedIndicator',
             type: 'bool',
             header: 'default: true',
-            desc: 'Generate a nested list indicator icon when nested list items are detected. Set to false if you do not want an indicator auto-generated. Note that an indicator will not be created if a rightIcon/Button has been specified.'
+            desc: 'Generate a nested list indicator icon when nested list items are detected. Set to false if you do not want an indicator auto-generated. Note that an indicator will not be created if a rightIcon/Button has been specified.',
           },
           {
             name: 'disabled',
             type: 'bool',
             header: 'default: false',
-            desc: 'If true, the list-item will not be clickable and will not display hover affects. This is automatically disabled if leftCheckbox or rightToggle is set.'
+            desc: 'If true, the list-item will not be clickable and will not display hover affects. This is automatically disabled if leftCheckbox or rightToggle is set.',
           },
           {
             name: 'insetChildren',
             type: 'bool',
             header: 'default: false',
-            desc: 'If true, the children will be indented by 72px. Only needed if there is no left avatar or left icon.'
+            desc: 'If true, the children will be indented by 72px. Only needed if there is no left avatar or left icon.',
           },
           {
             name: 'leftAvatar',
             type: 'element',
             header: 'optional',
-            desc: 'This is the Avatar element to be displayed on the left side.'
+            desc: 'This is the Avatar element to be displayed on the left side.',
           },
           {
             name: 'leftCheckbox',
             type: 'element',
             header: 'optional',
-            desc: 'This is the Checkbox element to be displayed on the left side.'
+            desc: 'This is the Checkbox element to be displayed on the left side.',
           },
           {
             name: 'leftIcon',
             type: 'element',
             header: 'optional',
-            desc: 'This is the SvgIcon or FontIcon to be displayed on the left side.'
+            desc: 'This is the SvgIcon or FontIcon to be displayed on the left side.',
           },
           {
             name: 'nestedItems',
             type: 'Array of elements',
             header: 'optional',
-            desc: 'An array of ListItems to nest underneath the current ListItem.'
+            desc: 'An array of ListItems to nest underneath the current ListItem.',
           },
           {
             name: 'nestedLevel',
             type: 'integer',
             header: 'optional',
-            desc: 'Controls how deep a ListItem appears. This property is automatically managed so modify at your own risk.'
+            desc: 'Controls how deep a ListItem appears. This property is automatically managed so modify at your own risk.',
           },
           {
             name: 'initiallyOpen',
             type: 'boolean',
             header: 'default: false',
-            desc: 'Controls whether or not the child ListItems are initially displayed.'
+            desc: 'Controls whether or not the child ListItems are initially displayed.',
           },
           {
             name: 'primaryText',
             type: 'node',
             header: 'optional',
             desc: 'This is the block element that contains the primary text. If a string is passed in, a div ' +
-              'tag will be rendered.'
+              'tag will be rendered.',
           },
           {
             name: 'rightAvatar',
             type: 'element',
             header: 'optional',
-            desc: 'This is the avatar element to be displayed on the right side.'
+            desc: 'This is the avatar element to be displayed on the right side.',
           },
           {
             name: 'rightIcon',
             type: 'element',
             header: 'optional',
-            desc: 'This is the SvgIcon or FontIcon to be displayed on the right side.'
+            desc: 'This is the SvgIcon or FontIcon to be displayed on the right side.',
           },
           {
             name: 'rightIconButton',
@@ -149,64 +155,76 @@ class ListsPage extends React.Component {
             header: 'optional',
             desc: 'This is the IconButton to be displayed on the right side. Hovering over this button will ' +
               'remove the ListItem hover. Also, clicking on this button will not trigger a ListItem ripple. The ' +
-              'event will be stopped and prevented from bubbling up to cause a ListItem click.'
+              'event will be stopped and prevented from bubbling up to cause a ListItem click.',
           },
           {
             name: 'rightToggle',
             type: 'element',
             header: 'optional',
-            desc: 'This is the Toggle element to display on the right side.'
+            desc: 'This is the Toggle element to display on the right side.',
           },
           {
             name: 'secondaryText',
             type: 'node',
             header: 'optional',
             desc: 'This is the block element that contains the secondary text. If a string is passed in, a div ' +
-              'tag will be rendered.'
+              'tag will be rendered.',
           },
           {
             name: 'secondaryTextLines',
             type: 'oneOf [1,2]',
             header: 'default: 1',
-            desc: 'Can be 1 or 2. This is the number of secondary text lines before ellipsis will show.'
-          }
-        ]
+            desc: 'Can be 1 or 2. This is the number of secondary text lines before ellipsis will show.',
+          },
+          {
+            name: 'style',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the list item\'s root element.',
+          },
+        ],
       },
       {
         name: 'ListItem Events',
         infoArray: [
           {
             name: 'onKeyboardFocus',
-            type: 'function(e, isKeyboardFocused)',
+            type: 'function(event, isKeyboardFocused)',
             header: 'optional',
-            desc: 'Called when the ListItem has keyboard focus.'
+            desc: 'Called when the ListItem has keyboard focus.',
           },
           {
             name: 'onMouseLeave',
-            type: 'function(e)',
+            type: 'function(event)',
             header: 'optional',
-            desc: 'Called when the mouse is no longer over the ListItem.'
+            desc: 'Called when the mouse is no longer over the ListItem.',
           },
           {
             name: 'onMouseEnter',
-            type: 'function(e)',
+            type: 'function(event)',
             header: 'optional',
-            desc: 'Called when the mouse is over the ListItem.'
+            desc: 'Called when the mouse is over the ListItem.',
           },
           {
             name: 'onNestedListToggle',
             type: 'function(this)',
             header: 'optional',
-            desc: 'Called when the ListItem toggles its nested ListItems.'
+            desc: 'Called when the ListItem toggles its nested ListItems.',
           },
           {
             name: 'onTouchStart',
-            type: 'function(e)',
+            type: 'function(event)',
             header: 'optional',
-            desc: 'Called when touches start.'
-          }
-        ]
-      }
+            desc: 'Called when touches start.',
+          },
+          {
+            name: 'onTouchTap',
+            type: 'function(event)',
+            header: 'optional',
+            desc: 'Called when a touch tap event occures on the component.',
+          },
+        ],
+      },
     ];
 
     let iconButtonElement = (
@@ -230,6 +248,18 @@ class ListsPage extends React.Component {
       <ComponentDoc
         name="Lists"
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nconst List = require(\'material-ui/lib/lists/list\');\n' +
+            'const ListDivider = require(\'material-ui/lib/lists/list-divider\');\n' +
+            'const ListItem = require(\'material-ui/lib/lists/list-item\');\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <MobileTearSheet>
             <List>
@@ -388,7 +418,7 @@ class ListsPage extends React.Component {
             <List subheader="Hangout notifications">
               <ListItem
                 leftCheckbox={<Checkbox />}
-                primaryText="Notificaitons"
+                primaryText="Notifications"
                 secondaryText="Allow notifications" />
               <ListItem
                 leftCheckbox={<Checkbox />}
@@ -642,5 +672,3 @@ class ListsPage extends React.Component {
   }
 
 }
-
-module.exports = ListsPage;

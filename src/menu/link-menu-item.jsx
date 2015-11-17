@@ -1,8 +1,9 @@
-let React = require('react');
-let StylePropable = require('../mixins/style-propable');
+const React = require('react');
+const StylePropable = require('../mixins/style-propable');
+const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
+const ThemeManager = require('../styles/theme-manager');
 
-
-let LinkMenuItem = React.createClass({
+const LinkMenuItem = React.createClass({
 
   mixins: [StylePropable],
 
@@ -18,6 +19,7 @@ let LinkMenuItem = React.createClass({
     active: React.PropTypes.bool,
     disabled: React.PropTypes.bool,
     className: React.PropTypes.string,
+    style: React.PropTypes.object,
   },
 
   getDefaultProps() {
@@ -27,14 +29,33 @@ let LinkMenuItem = React.createClass({
     };
   },
 
-  getInitialState() {
+  //for passing default theme context to children
+  childContextTypes: {
+    muiTheme: React.PropTypes.object,
+  },
+
+  getChildContext () {
     return {
+      muiTheme: this.state.muiTheme,
+    };
+  },
+
+  getInitialState () {
+    return {
+      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
       hovered: false,
     };
   },
 
+  //to update theme inside state whenever a new theme is passed down
+  //from the parent / owner using context
+  componentWillReceiveProps (nextProps, nextContext) {
+    let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
+    this.setState({muiTheme: newMuiTheme});
+  },
+
   getTheme() {
-    return this.context.muiTheme.component.menuItem;
+    return this.state.muiTheme.menuItem;
   },
 
   getStyles() {
@@ -55,7 +76,7 @@ let LinkMenuItem = React.createClass({
       },
       rootWhenDisabled: {
         cursor: 'default',
-        color: this.context.muiTheme.palette.disabledColor,
+        color: this.state.muiTheme.rawTheme.palette.disabledColor,
       },
     };
 
@@ -72,7 +93,7 @@ let LinkMenuItem = React.createClass({
     let styles = this.getStyles();
 
     let linkStyles =
-      this.mergeAndPrefix(
+      this.prepareStyles(
         styles.root,
         this.props.selected && styles.rootWhenSelected,
         this.props.selected && styles.rootWhenSelected,

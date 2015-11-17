@@ -1,13 +1,14 @@
-let React = require('react');
-let StylePropable = require('../mixins/style-propable');
-let WindowListenable = require('../mixins/window-listenable');
-let KeyCode = require('../utils/key-code');
-let Clock = require('./clock');
-let Dialog = require('../dialog');
-let FlatButton = require('../flat-button');
+const React = require('react');
+const StylePropable = require('../mixins/style-propable');
+const WindowListenable = require('../mixins/window-listenable');
+const KeyCode = require('../utils/key-code');
+const Clock = require('./clock');
+const Dialog = require('../dialog');
+const FlatButton = require('../flat-button');
+const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
+const ThemeManager = require('../styles/theme-manager');
 
-
-let TimePickerDialog = React.createClass({
+const TimePickerDialog = React.createClass({
 
   mixins: [StylePropable, WindowListenable],
 
@@ -16,10 +17,36 @@ let TimePickerDialog = React.createClass({
   },
 
   propTypes: {
+    autoOk: React.PropTypes.bool,
     initialTime: React.PropTypes.object,
     onAccept: React.PropTypes.func,
     onShow: React.PropTypes.func,
     onDismiss: React.PropTypes.func,
+  },
+
+  //for passing default theme context to children
+  childContextTypes: {
+    muiTheme: React.PropTypes.object,
+  },
+
+  getChildContext () {
+    return {
+      muiTheme: this.state.muiTheme,
+    };
+  },
+
+  getInitialState () {
+    return {
+      open: false,
+      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
+    };
+  },
+
+  //to update theme inside state whenever a new theme is passed down
+  //from the parent / owner using context
+  componentWillReceiveProps (nextProps, nextContext) {
+    let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
+    this.setState({muiTheme: newMuiTheme});
   },
 
   windowListeners: {
@@ -28,7 +55,7 @@ let TimePickerDialog = React.createClass({
 
 
   getTheme() {
-    return this.context.muiTheme.component.timePicker;
+    return this.state.muiTheme.timePicker;
   },
 
   render() {
@@ -36,6 +63,7 @@ let TimePickerDialog = React.createClass({
       initialTime,
       onAccept,
       format,
+      autoOk,
       ...other,
     } = this.props;
 
@@ -65,6 +93,8 @@ let TimePickerDialog = React.createClass({
         onTouchTap={this._handleOKTouchTap} />,
     ];
 
+    const onClockChangeMinutes = (autoOk === true ? this._handleOKTouchTap : undefined);
+
     return (
       <Dialog {...other}
         ref="dialogWindow"
@@ -74,21 +104,28 @@ let TimePickerDialog = React.createClass({
         contentStyle={styles.dialogContent}
         onDismiss={this._handleDialogDismiss}
         onShow={this._handleDialogShow}
-        repositionOnUpdate={false}>
+        repositionOnUpdate={false}
+        open={this.state.open}
+        onRequestClose={this.dismiss}>
         <Clock
           ref="clock"
           format={format}
-          initialTime={initialTime} />
+          initialTime={initialTime}
+          onChangeMinutes={onClockChangeMinutes} />
       </Dialog>
     );
   },
 
   show() {
-    this.refs.dialogWindow.show();
+    this.setState({
+      open: true,
+    });
   },
 
   dismiss() {
-    this.refs.dialogWindow.dismiss();
+    this.setState({
+      open: false,
+    });
   },
 
   _handleCancelTouchTap() {
@@ -114,9 +151,9 @@ let TimePickerDialog = React.createClass({
     }
   },
 
-  _handleWindowKeyUp(e) {
+  _handleWindowKeyUp(event) {
     if (this.refs.dialogWindow.isOpen()) {
-      switch (e.keyCode) {
+      switch (event.keyCode) {
         case KeyCode.ENTER:
           this._handleOKTouchTap();
           break;

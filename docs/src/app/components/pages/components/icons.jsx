@@ -1,16 +1,16 @@
-let React = require('react');
-let { ClearFix, FontIcon, Styles, Paper } = require('material-ui');
-let CodeBlock = require('../../code-example/code-block');
-let ComponentDoc = require('../../component-doc');
-let ActionHome = require('svg-icons/action/home');
+const React = require('react');
+const { ClearFix, FontIcon, Styles, Paper } = require('material-ui');
+const CodeBlock = require('../../code-example/code-block');
+const ComponentDoc = require('../../component-doc');
+const ActionHome = require('svg-icons/action/home');
 
-let { Colors, Typography } = Styles;
-let IconButtonCode = require('icons-code');
-let SvgIconsCode = require('svg-icons-code');
-let CodeExample = require('../../code-example/code-example');
+const { Colors, Typography } = Styles;
+const IconButtonCode = require('icons-code');
+const SvgIconsCode = require('svg-icons-code');
+const CodeExample = require('../../code-example/code-example');
 
 
-class FontIconPage extends React.Component {
+export default class FontIconPage extends React.Component {
 
   getStyles() {
     return {
@@ -21,7 +21,7 @@ class FontIconPage extends React.Component {
       color: Typography.textDarkBlack,
       lineHeight: '24px',
       paddingTop: '3px',
-      marginBottom: '13px'
+      marginBottom: '13px',
     };
   }
 
@@ -38,7 +38,7 @@ class FontIconPage extends React.Component {
         and reference the icon&#39;s className in the "className" prop. <br /><br />
         We also support <a title="Google's
         Material Icons" href="https://google.github.io/material-design-icons">Google&#39;s
-        Material Icons</a> as seen in the third block of code. If you're using the material icons, be sure to include the link to the font icon file in your head section:
+        Material Icons</a> as seen in the third block of code. If you&#39;re using the material icons, be sure to include the link to the font icon file in your head section:
         <Paper>
           <CodeBlock>
             {'<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">'}
@@ -67,15 +67,21 @@ class FontIconPage extends React.Component {
             type: 'string',
             header: 'optional',
             desc: 'This is the font color of the font icon. If not specified, ' +
-              'this component will default to muiTheme.palette.textColor.'
+              'this component will default to muiTheme.palette.textColor.',
           },
           {
             name: 'hoverColor',
             type: 'string',
             header: 'optional',
-            desc: 'This is the icon color when the mouse hovers over the icon.'
-          }
-        ]
+            desc: 'This is the icon color when the mouse hovers over the icon.',
+          },
+          {
+            name: 'style',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the font icon\'s root element.',
+          },
+        ],
       },
       {
         name: 'Properties',
@@ -85,20 +91,26 @@ class FontIconPage extends React.Component {
             type: 'string',
             header: 'optional',
             desc: 'This is the fill color of the svg icon. If not specified, ' +
-              'this component will default to muiTheme.palette.textColor.'
+              'this component will default to muiTheme.palette.textColor.',
           },
           {
             name: 'hoverColor',
             type: 'string',
             header: 'optional',
-            desc: 'This is the icon color when the mouse hovers over the icon.'
-          }
+            desc: 'This is the icon color when the mouse hovers over the icon.',
+          },
+          {
+            name: 'style',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the svg icon\'s root element.',
+          },
         ],
-      }
+      },
     ];
 
     let iconStyles = {
-      marginRight: 24
+      marginRight: 24,
     };
 
     return (
@@ -106,7 +118,17 @@ class FontIconPage extends React.Component {
         <ComponentDoc
           name="Font Icons"
           desc={fontIconDesc}
-          componentInfo={componentInfo.slice(0,1)}>
+          componentInfo={componentInfo.slice(0, 1)}>
+
+          <Paper style = {{marginBottom: '22px'}}>
+            <CodeBlock>
+            {
+              '//Import statement:\nconst FontIcon = require(\'material-ui/lib/font-icon\');\n\n' +
+              '//See material-ui/lib/index.js for more\n'
+            }
+            </CodeBlock>
+          </Paper>
+
           <CodeExample code={IconButtonCode}>
             <FontIcon className="muidocs-icon-action-home" style={iconStyles} />
             <FontIcon className="muidocs-icon-action-home" style={iconStyles} color={Colors.red500} />
@@ -127,7 +149,7 @@ class FontIconPage extends React.Component {
         <ComponentDoc
           name="SVG Icons"
           desc={svgIconDesc}
-          componentInfo={componentInfo.slice(1,2)}>
+          componentInfo={componentInfo.slice(1, 2)}>
           <CodeExample code={SvgIconsCode}>
             <ActionHome style={iconStyles} />
             <ActionHome style={iconStyles} color={Colors.red500} />
@@ -145,5 +167,3 @@ class FontIconPage extends React.Component {
   }
 
 }
-
-module.exports = FontIconPage;
