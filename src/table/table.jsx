@@ -42,6 +42,7 @@ const Table = React.createClass({
   //for passing default theme context to children
   childContextTypes: {
     muiTheme: React.PropTypes.object,
+    selectedRows: React.PropTypes.any,
   },
 
   getChildContext () {
@@ -252,7 +253,6 @@ const Table = React.createClass({
       selectedRows = [];
     } else {
       selectedRows = 'all';
-      }
     }
 
     this.props.onRowSelection && this.props.onRowSelection(selectedRows);

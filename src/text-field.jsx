@@ -157,7 +157,6 @@ const TextField = React.createClass({
       hintColor,
       errorColor,
     } = this.constructor.getRelevantContextKeys(this.state.muiTheme);
-
     let styles = {
       root: {
         fontSize: 16,
@@ -184,7 +183,7 @@ const TextField = React.createClass({
         right: 0,
         fontSize: 12,
         lineHeight: '12px',
-        color: theme.hintColor,
+        color: hintColor,
       },
       hint: {
         position: 'absolute',

@@ -1,6 +1,8 @@
 const React = require('react');
 const StylePropable = require('../mixins/style-propable');
 const Tooltip = require('../tooltip');
+const FontIcon = require('../font-icon');
+const Colors = require('../styles/colors');
 const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
 const ThemeManager = require('../styles/theme-manager');
 
