@@ -9,7 +9,7 @@ import Dom from '../utils/dom';
 import PropTypes from '../utils/prop-types';
 import Transitions from '../styles/transitions';
 import Paper from '../paper';
-import throttle from 'lodash.throttle';
+import {throttle} from 'lodash';
 import AutoPrefix from '../styles/auto-prefix';
 import ContextPure from '../mixins/context-pure';
 

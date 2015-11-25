@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Events from './utils/events';
 import Dom from './utils/dom';
-import debounce from 'lodash.debounce';
+import {debounce} from 'lodash';
 
 // heavily inspired by https://github.com/Khan/react-components/blob/master/js/layered-component-mixin.jsx
 const RenderToLayer = React.createClass({
