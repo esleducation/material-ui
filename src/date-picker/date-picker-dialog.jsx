@@ -166,8 +166,8 @@ const DatePickerDialog = React.createClass({
         contentStyle={styles.dialogContent}
         bodyStyle={styles.dialogBodyContent}
         actions={actions}
-        onDismiss={typeof onDismiss === 'function' && onDismiss}
-        onShow={typeof onShow === 'function' && onShow}
+        onDismiss={typeof onDismiss === 'function' ? onDismiss : undefined}
+        onShow={typeof onShow === 'function' ? onShow : undefined}
         repositionOnUpdate={false}
         open={this.state.open}
         onRequestClose={this.dismiss}>
