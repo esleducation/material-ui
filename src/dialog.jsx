@@ -111,17 +111,22 @@ let Dialog = React.createClass({
     contentClassName: React.PropTypes.string,
     contentStyle: React.PropTypes.object,
     openImmediately: React.PropTypes.bool,
-    onClickAway: React.PropTypes.func,
     repositionOnUpdate: React.PropTypes.bool,
     style: React.PropTypes.object,
     title: React.PropTypes.node,
     defaultOpen: React.PropTypes.bool,
     open: React.PropTypes.bool,
+    modal: React.PropTypes.bool,
+    onDismiss: React.PropTypes.func,
+    onShow: React.PropTypes.func,
+    onRequestClose: React.PropTypes.func,
+    actionFocus: React.PropTypes.string, 
+    titleStyle: React.PropTypes.object,
   },
 
   windowListeners: {
     keyup: '_handleWindowKeyUp',
-    resize: '_positionDialog',
+    resize: '_handleResize',
   },
 
   getDefaultProps() {
@@ -290,10 +295,10 @@ let Dialog = React.createClass({
     warning(!this.props.hasOwnProperty('openImmediately'),
       'openImmediately has been deprecated in favor of defaultOpen');
 
-    warning(!this.props.hasOwnProperty('onShow'),
+    warning(!(typeof this.props.onShow === 'function'),
       'onShow will be removed in favor of explicitly setting open');
 
-    warning(!this.props.hasOwnProperty('onDismiss'),
+    warning(!(typeof this.props.onDismiss === 'function'),
       'onDismiss will be removed in favor of explicitly setting open and can be replaced by onRequestClose');
 
     warning(!this.props.hasOwnProperty('modal'),
@@ -466,6 +471,13 @@ let Dialog = React.createClass({
   _handleWindowKeyUp(event) {
     if (event.keyCode === KeyCode.ESC) {
       this._requestClose(false);
+    }
+  },
+
+  _handleResize() {
+    if (this.state.open) {
+      this.refs.dialogOverlay.preventScrolling();
+      this._positionDialog();
     }
   },
 

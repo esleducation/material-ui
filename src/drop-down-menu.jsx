@@ -48,6 +48,7 @@ const DropDownMenu = React.createClass({
     selectedIndex: React.PropTypes.number,
     openImmediately: React.PropTypes.bool,
     style: React.PropTypes.object,
+    value: React.PropTypes.object,
   },
 
   getDefaultProps() {
@@ -177,8 +178,6 @@ const DropDownMenu = React.createClass({
     const {
       autoWidth,
       className,
-      onFocus,
-      onBlur,
       style,
       displayMember,
       valueMember,
@@ -225,8 +224,6 @@ const DropDownMenu = React.createClass({
         {...other}
         ref="root"
         onKeyDown={this._onKeyDown}
-        onFocus={onFocus}
-        onBlur={onBlur}
         className={className}
         style={this.prepareStyles(
           styles.root,
@@ -316,12 +313,12 @@ const DropDownMenu = React.createClass({
   },
 
   _onMenuItemClick(e, key, payload) {
-    if (this.props.onChange && this.state.selectedIndex !== key) {
-      let selectedItem = this.props.menuItems[key];
-      if (selectedItem) {
-        e.target.value = selectedItem[this.props.valueMember];
-      }
+    let selectedItem = this.props.menuItems[key];
+    if (selectedItem) {
+      e.target.value = selectedItem[this.props.valueMember];
+    }
 
+    if (this.props.onChange && (this.state.selectedIndex !== key || e.target.value !== this.props.value)) {
       if (this.props.valueLink) {
         this.props.valueLink.requestChange(e.target.value);
       }

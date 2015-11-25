@@ -59,6 +59,7 @@ const RaisedButton = React.createClass({
     disabledLabelColor: React.PropTypes.string,
     fullWidth: React.PropTypes.bool,
     style: React.PropTypes.object,
+    onMouseEnter: React.PropTypes.func,
   },
 
   getDefaultProps: function() {
@@ -123,7 +124,6 @@ const RaisedButton = React.createClass({
     let amount = (this.props.primary || this.props.secondary) ? 0.4 : 0.08;
     let styles = {
       root: {
-        backgroundColor: 'none',
         display: 'inline-block',
         minWidth: this.props.fullWidth ? '100%' : this.getThemeButton().minWidth,
         height: this.getThemeButton().height,

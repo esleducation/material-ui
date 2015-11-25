@@ -52,21 +52,39 @@ export default class TablePage extends React.Component {
         infoArray: [
           {
             name: 'allRowsSelected',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: false',
             desc: 'Set to true to indicate that all rows should be selected.',
           },
           {
+            name: 'bodyStyle',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the body\'s table element.',
+          },
+          {
             name: 'fixedFooter',
-            type: 'boolean',
+            type: 'bool',
             header: 'optional',
             desc: 'If true, the footer will appear fixed below the table. The default value is true.',
           },
           {
             name: 'fixedHeader',
-            type: 'boolean',
+            type: 'bool',
             header: 'optional',
             desc: 'If true, the header will appear fixed above the table. The default value is true.',
+          },
+          {
+            name: 'footerStyle',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the footer\'s table element.',
+          },
+          {
+            name: 'headerStyle',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the header\'s table element.',
           },
           {
             name: 'height',
@@ -76,14 +94,14 @@ export default class TablePage extends React.Component {
           },
           {
             name: 'multiSelectable',
-            type: 'boolean',
+            type: 'bool',
             header: 'optional',
             desc: 'If true, multiple table rows can be selected. CTRL/CMD+Click and SHIFT+Click are valid actions. The ' +
               'default value is false.',
           },
           {
             name: 'selectable',
-            type: 'boolean',
+            type: 'bool',
             header: 'optional',
             desc: 'If true, table rows can be selected. If multiple row selection is desired, enable multiSelectable. ' +
               'The default value is true.',
@@ -92,7 +110,13 @@ export default class TablePage extends React.Component {
             name: 'style',
             type: 'object',
             header: 'optional',
-            desc: 'Override the inline-styles of the table\'s root element.',
+            desc: 'Override the inline-styles of header, footer and body wrapper elements.',
+          },
+          {
+            name: 'wrapperStyle',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the table\'s wrapper element.',
           },
         ],
       },
@@ -101,7 +125,7 @@ export default class TablePage extends React.Component {
         infoArray: [
           {
             name: 'adjustForCheckbox',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: true',
             desc: 'Controls whether or not header rows should be adjusted for a checkbox column. If the select all checkbox ' +
               'is true, this property will not influence the number of columns. This is mainly useful for "super header" ' +
@@ -109,20 +133,20 @@ export default class TablePage extends React.Component {
           },
           {
             name: 'displaySelectAll',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: true',
             desc: 'Controls whether or not the select all checkbox is displayed.',
           },
           {
             name: 'enableSelectAll',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: true',
             desc: 'If set to true, the select all button will be interactable. If set to false, the button will not ' +
               'be interactable. To hide the checkbox, set displaySelectAll to false.',
           },
           {
             name: 'selectAllSelected',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: true',
             desc: 'If set to true the select all checkbox will be programmatically checked and will not trigger the select ' +
               'all event.',
@@ -140,53 +164,53 @@ export default class TablePage extends React.Component {
         infoArray: [
           {
             name: 'allRowsSelected',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: false',
             desc: 'Set to true to indicate that all rows should be selected.',
           },
           {
-            name: 'deselectOnClickAway',
-            type: 'boolean',
+            name: 'deselectOnClickaway',
+            type: 'bool',
             header: 'default: true',
             desc: 'Controls whether or not to deselect all selected rows after clicking outside the table.',
           },
           {
             name: 'displayRowCheckbox',
-            type: 'boolean',
+            type: 'bool',
             header: 'optional',
             desc: 'Controls the display of the row checkbox. The default value is true.',
           },
           {
             name: 'multiSelectable',
-            type: 'boolean',
+            type: 'bool',
             header: 'optional',
             desc: 'If true, multiple table rows can be selected. CTRL/CMD+Click and SHIFT+Click are valid actions. The ' +
               'default value is false.',
           },
           {
             name: 'preScanRows',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: true',
             desc: 'Controls whether or not the rows are pre-scanned to determine initial state. If your table has a large ' +
               'number of rows and you are experiencing a delay in rendering, turn off this property.',
           },
           {
             name: 'selectable',
-            type: 'boolean',
+            type: 'bool',
             header: 'optional',
             desc: 'If true, table rows can be selected. If multiple row selection is desired, enable multiSelectable. ' +
               'The default value is true.',
           },
           {
             name: 'showRowHover',
-            type: 'boolean',
+            type: 'bool',
             header: 'optional',
             desc: 'If true, table rows will be highlighted when the cursor is hovering over the row. The default value ' +
               'is false.',
           },
           {
             name: 'stripedRows',
-            type: 'boolean',
+            type: 'bool',
             header: 'optional',
             desc: 'If true, every other table row starting with the first row will be striped. The default value is false.',
           },
@@ -203,7 +227,7 @@ export default class TablePage extends React.Component {
         infoArray: [
           {
             name: 'adjustForCheckbox',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: true',
             desc: 'Controls whether or not header rows should be adjusted for a checkbox column. If the select all checkbox ' +
               'is true, this property will not influence the number of columns. This is mainly useful for "super header" ' +
@@ -222,13 +246,13 @@ export default class TablePage extends React.Component {
         infoArray: [
           {
             name: 'displayBorder',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: true',
             desc: 'If true, row border will be displayed for the row. If false, no border will be drawn.',
           },
           {
             name: 'hoverable',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: false',
             desc: 'Controls whether or not the row reponseds to hover events.',
           },
@@ -240,20 +264,20 @@ export default class TablePage extends React.Component {
           },
           {
             name: 'selectable',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: true',
             desc: 'If true, table rows can be selected. If multiple row selection is desired, enable multiSelectable. ' +
               'The default value is true.',
           },
           {
             name: 'selected',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: false',
             desc: 'Indicates that a particular row is selected. This property can be used to programmatically select rows.',
           },
           {
             name: 'striped',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: false',
             desc: 'Indicates whether or not the row is striped.',
           },
@@ -305,7 +329,7 @@ export default class TablePage extends React.Component {
           },
           {
             name: 'hoverable',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: false',
             desc: 'If true, this column responds to hover events.',
           },

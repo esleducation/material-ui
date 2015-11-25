@@ -21,6 +21,7 @@ const InlineStyles = require('./components/pages/customization/inline-styles');
 
 const Components = require('./components/pages/components');
 const AppBar = require('./components/pages/components/app-bar');
+const AutoComplete = require('./components/pages/components/auto-complete');
 const Avatars = require('./components/pages/components/avatars');
 const Badge = require('./components/pages/components/badge');
 const Buttons = require('./components/pages/components/buttons');
@@ -36,8 +37,10 @@ const LeftNav = require('./components/pages/components/left-nav');
 const Lists = require('./components/pages/components/lists');
 const Menus = require('./components/pages/components/menus');
 const Paper = require('./components/pages/components/paper');
+const Popover = require('./components/pages/components/popover');
 const Progress = require('./components/pages/components/progress');
 const RefreshIndicator = require('./components/pages/components/refresh-indicator');
+const SelectFields = require('./components/pages/components/select-fields');
 const Sliders = require('./components/pages/components/sliders');
 const Snackbar = require('./components/pages/components/snackbar');
 const Switches = require('./components/pages/components/switches');
@@ -77,6 +80,7 @@ const AppRoutes = (
     <Redirect from="components" to="/components/appbar" />
     <Route path="components" component={Components}>
       <Route path="appbar" component={AppBar} />
+      <Route path="auto-complete" component={AutoComplete} />
       <Route path="avatars" component={Avatars} />
       <Route path="badge" component={Badge} />
       <Route path="buttons" component={Buttons} />
@@ -92,8 +96,10 @@ const AppRoutes = (
       <Route path="lists" component={Lists} />
       <Route path="menus" component={Menus} />
       <Route path="paper" component={Paper} />
+      <Route path="popover" component={Popover} />
       <Route path="progress" component={Progress} />
       <Route path="refresh-indicator" component={RefreshIndicator} />
+      <Route path="select-fields" component={SelectFields} />
       <Route path="sliders" component={Sliders} />
       <Route path="switches" component={Switches} />
       <Route path="snackbar" component={Snackbar} />

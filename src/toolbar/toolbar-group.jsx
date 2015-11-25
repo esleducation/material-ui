@@ -16,6 +16,8 @@ const ToolbarGroup = React.createClass({
     className: React.PropTypes.string,
     float: React.PropTypes.string,
     style: React.PropTypes.object,
+    lastChild: React.PropTypes.bool,
+    firstChild: React.PropTypes.bool,
   },
 
   //for passing default theme context to children
@@ -67,7 +69,7 @@ const ToolbarGroup = React.createClass({
       dropDownMenu: {
         root: {
           float: 'left',
-          color: Colors.lightBlack,// removes hover color change, we want to keep it
+          color: Colors.lightBlack, // removes hover color change, we want to keep it
           display: 'inline-block',
           marginRight: this.getSpacing(),
         },
