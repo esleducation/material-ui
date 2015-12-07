@@ -55,7 +55,7 @@ const TextField = React.createClass({
     style: React.PropTypes.object,
     disabled: React.PropTypes.bool,
     defaultValue: React.PropTypes.string,
-    value: React.PropTypes.string,
+    value: React.PropTypes.any,
   },
 
   //for passing default theme context to children
