@@ -25,7 +25,7 @@ const RadioButtonGroup = React.createClass({
 
   propTypes: {
     name: React.PropTypes.string.isRequired,
-    valueSelected: React.PropTypes.string,
+    valueSelected: React.PropTypes.any,
     defaultSelected: React.PropTypes.string,
     labelPosition: React.PropTypes.oneOf(['left', 'right']),
     onChange: React.PropTypes.func,
@@ -69,7 +69,7 @@ const RadioButtonGroup = React.createClass({
     if (nextProps.hasOwnProperty('valueSelected')) {
       newState.selected = nextProps.valueSelected;
     }
-    
+
     this.setState(newState);
   },
 
