@@ -68,6 +68,10 @@ const Table = React.createClass({
   componentWillReceiveProps (nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
+
+    if(this.state.selectedRows === 'all' && nextProps.selectedRows.length == 0){
+        this.setState({ selectedRows: undefined });
+    }
   },
 
   getTheme() {
