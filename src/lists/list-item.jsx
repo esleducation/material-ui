@@ -134,7 +134,8 @@ const ListItem = React.createClass({
     } = this.props;
 
     const textColor = this.state.muiTheme.rawTheme.palette.textColor;
-    const hoverColor = ColorManipulator.fade(textColor, 0.1);
+    // const hoverColor = ColorManipulator.fade(textColor, 0.1);
+    const hoverColor = this.state.muiTheme.listItem.hoverColor;
     const singleAvatar = !secondaryText && (leftAvatar || rightAvatar);
     const singleNoAvatar = !secondaryText && !(leftAvatar || rightAvatar);
     const twoLine = secondaryText && secondaryTextLines === 1;

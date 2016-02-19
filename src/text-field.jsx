@@ -168,15 +168,16 @@ const TextField = React.createClass({
       },
       error: {
         position: 'relative',
-        bottom: 5,
+        bottom: 12,
         fontSize: 12,
         lineHeight: '12px',
         color: errorColor,
+        paddingRight: '80px',
         transition: Transitions.easeOut(),
       },
       maxLengthCounter: {
         position: 'absolute',
-        bottom: -7,
+        bottom: -8,
         right: 0,
         fontSize: 12,
         lineHeight: '12px',
@@ -186,7 +187,7 @@ const TextField = React.createClass({
         position: 'absolute',
         lineHeight: '22px',
         opacity: 1,
-        color: hintColor,
+        color: props.disabled ? disabledTextColor : hintColor,
         transition: Transitions.easeOut(),
         bottom: 12,
       },
@@ -207,7 +208,7 @@ const TextField = React.createClass({
         borderBottom: 'solid 1px ' + borderColor,
         position: 'absolute',
         width: '100%',
-        bottom: 8,
+        bottom: 6,
         margin: 0,
         MozBoxSizing: 'content-box',
         boxSizing: 'content-box',
@@ -219,8 +220,8 @@ const TextField = React.createClass({
         overflow: 'hidden',
         userSelect: 'none',
         cursor: 'default',
-        bottom: 8,
-        borderBottom: 'dotted 2px ' + disabledTextColor,
+        bottom: 6,
+        borderBottom: 'dotted 1px ' + borderColor,
       },
       underlineFocus: {
         borderBottom: 'solid 2px',
@@ -236,7 +237,7 @@ const TextField = React.createClass({
 
     styles.floatingLabel = this.mergeStyles(styles.hint, {
       lineHeight: '22px',
-      top: 38,
+      top: 39,
       bottom: 'none',
       opacity: 1,
       zIndex: 1, // Needed to display label above Chrome's autocomplete field background
@@ -256,15 +257,16 @@ const TextField = React.createClass({
 
     if (this.props.isFocused || this.state.isFocused) {
       styles.floatingLabel.color = focusColor;
-      styles.floatingLabel.transform = 'perspective(1px) scale(0.75) translate3d(2px, -28px, 0)';
+      styles.floatingLabel.transform = 'perspective(1px) scale(1) translate3d(0px, -24px, 0)';
+      styles.floatingLabel.fontSize = '12px';
       styles.focusUnderline.transform = 'scaleX(1)';
 
 
     }
 
     if (this.state.hasValue) {
-      styles.floatingLabel.color = ColorManipulator.fade(props.disabled ? disabledTextColor : floatingLabelColor, 0.5);
-      styles.floatingLabel.transform = 'perspective(1px) scale(0.75) translate3d(2px, -28px, 0)';
+      styles.floatingLabel.transform = 'perspective(1px) scale(1) translate3d(0px, -24px, 0)';
+      styles.floatingLabel.fontSize = '12px';
       styles.hint.opacity = 0;
     }
 

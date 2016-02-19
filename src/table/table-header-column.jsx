@@ -128,7 +128,8 @@ const TableHeaderColumn = React.createClass({
       styles.root.cursor = 'pointer';
 
       if(sorting.property === sort) {
-        styles.root.color = Colors.black;
+        // styles.root.color = Colors.black;
+        styles.root.color = this.state.muiTheme.tableRow.textColor;
 
         sortIcon = (
           <FontIcon style={{verticalAlign: 'middle'}} className="material-icons" color={styles.root.color}>{sorting.order == 'asc' ? 'arrow_drop_up' : 'arrow_drop_down'}</FontIcon>
