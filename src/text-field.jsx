@@ -167,8 +167,8 @@ const TextField = React.createClass({
         transition: Transitions.easeOut('200ms', 'height'),
       },
       error: {
-        position: 'relative',
-        bottom: 12,
+        position: 'absolute',
+        bottom: -13,
         fontSize: 12,
         lineHeight: '12px',
         color: errorColor,

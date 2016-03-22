@@ -129,13 +129,14 @@ const EnhancedSwitch = React.createClass({
   getStyles() {
     let spacing = this.state.muiTheme.rawTheme.spacing;
     let switchWidth = 60 - spacing.desktopGutterLess;
-    let labelWidth = 'calc(100% - 60px)';
+    // let labelWidth = 'calc(100% - 60px)';
     let styles = {
       root: {
         position: 'relative',
         cursor: this.props.disabled ? 'default' : 'pointer',
         overflow: 'visible',
-        display: 'table',
+        // display: 'table',
+        whiteSpace: 'pre',
         height: 'auto',
         width: '100%',
       },
@@ -157,18 +158,24 @@ const EnhancedSwitch = React.createClass({
         height: '100%',
       },
       label: {
-        float: 'left',
+        // float: 'left',
         position: 'relative',
-        display: 'block',
-        width: labelWidth,
+        display: 'inline-block',
+        // top: '-4px',
+        // display: 'block',
+        // width: labelWidth,
         lineHeight: '24px',
+        verticalAlign: 'middle',
         color: this.getTheme().textColor,
       },
       wrap: {
         transition: Transitions.easeOut(),
-        float: 'left',
+        // float: 'left',
+        display: 'inline-block',
         position: 'relative',
-        display: 'block',
+        // top: '2px',
+        // display: 'block',
+        verticalAlign: 'middle',
         width: switchWidth,
         marginRight: (this.props.labelPosition === 'right') ?
           spacing.desktopGutterLess : 0,
@@ -213,14 +220,18 @@ const EnhancedSwitch = React.createClass({
     let rippleColor = this.props.hasOwnProperty('rippleColor') ? this.props.rippleColor :
                       this.getTheme().primary1Color;
 
-    if (this.props.thumbStyle) {
+    // if (this.props.thumbStyle) {
       wrapStyles.marginLeft /= 2;
       wrapStyles.marginRight /= 2;
-    }
+    // }
+
 
     let inputId = this.props.id || UniqueId.generate();
 
     let labelStyle = this.prepareStyles(styles.label, this.props.labelStyle);
+    if (!this.props.thumbStyle) {
+        labelStyle.top = '1px';
+    }
     let labelElement = this.props.label ? (
       <label style={labelStyle} htmlFor={inputId}>
         {this.props.label}

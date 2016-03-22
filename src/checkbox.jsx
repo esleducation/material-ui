@@ -142,7 +142,7 @@ const Checkbox = React.createClass({
     });
 
     let checkboxElement = (
-      <div>
+      <div style={{float:'left'}}>
         {unCheckedElement}
         {checkedElement}
       </div>
